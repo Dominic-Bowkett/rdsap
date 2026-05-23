@@ -423,6 +423,6 @@ const fields: FieldDef[] = [
 ];
 
 export const RDSAP_CATALOGUE: Catalogue = {
-  version: 'RdSAP10 (Feb 2024) — Table 31',
+  version: 'RdSAP10 (Feb 2024) — Table 31 · rev2 (conditional fields)',
   fields,
 };

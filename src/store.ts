@@ -20,9 +20,16 @@ function clone<T>(value: T): T {
 
 /** Catalogue state: the field definitions a trainer curates. Persisted to localStorage. */
 export function useCatalogue() {
-  const [catalogue, setCatalogue] = useState<Catalogue>(() =>
-    load(CATALOGUE_KEY, clone(RDSAP_CATALOGUE)),
-  );
+  const [catalogue, setCatalogue] = useState<Catalogue>(() => {
+    const stored = load<Catalogue | null>(CATALOGUE_KEY, null);
+    // Re-seed when there is no stored catalogue, or when the bundled spec has a
+    // newer version than what was cached (e.g. after the field/visibility rules
+    // change). This stops a stale cached catalogue from masking spec updates.
+    if (stored && Array.isArray(stored.fields) && stored.version === RDSAP_CATALOGUE.version) {
+      return stored;
+    }
+    return clone(RDSAP_CATALOGUE);
+  });
 
   useEffect(() => {
     localStorage.setItem(CATALOGUE_KEY, JSON.stringify(catalogue));
