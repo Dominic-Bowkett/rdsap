@@ -7,14 +7,14 @@ export function Guidance({ text }: { text: string }) {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="ml-1 h-5 w-5 rounded-full border border-slate-300 text-xs font-bold text-slate-500 hover:bg-slate-100"
+        className="ml-1.5 inline-flex h-[18px] w-[18px] items-center justify-center rounded-full bg-slate-200/80 text-[11px] font-semibold text-slate-500 transition hover:bg-[#0071e3] hover:text-white"
         aria-label="Show guidance"
         title="Show guidance"
       >
         ?
       </button>
       {open && (
-        <span className="absolute left-6 top-0 z-10 w-72 rounded-md border border-slate-200 bg-white p-3 text-sm text-slate-700 shadow-lg">
+        <span className="absolute left-6 top-0 z-20 w-72 rounded-2xl border border-black/5 bg-white/90 p-3.5 text-[13px] font-normal leading-relaxed text-slate-600 shadow-xl backdrop-blur-xl">
           {text}
         </span>
       )}

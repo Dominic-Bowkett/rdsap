@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import type { Answers, AnswerValue, Catalogue, FieldDef } from '../types';
+import { visibleFields } from '../visibility';
 
 interface Props {
   catalogue: Catalogue;
@@ -19,65 +20,78 @@ function isCorrect(field: FieldDef, value: AnswerValue | undefined): boolean {
 }
 
 export function ReviewPanel({ catalogue, answers }: Props) {
-  const graded = useMemo(
-    () => catalogue.fields.filter((f) => (f.modelAnswer ?? '').trim() !== ''),
-    [catalogue.fields],
-  );
+  // Only assess fields that are currently relevant (visible) for these answers.
+  const relevant = useMemo(() => visibleFields(catalogue.fields, answers), [catalogue.fields, answers]);
+  const graded = useMemo(() => relevant.filter((f) => (f.modelAnswer ?? '').trim() !== ''), [relevant]);
 
-  const answeredCount = catalogue.fields.filter(
+  const answeredCount = relevant.filter(
     (f) => answers[f.code] !== undefined && answers[f.code] !== '',
   ).length;
-
   const correct = graded.filter((f) => isCorrect(f, answers[f.code])).length;
+  const score = graded.length ? Math.round((correct / graded.length) * 100) : 0;
 
   return (
     <div className="space-y-6">
-      <div className="rounded-lg border border-slate-200 bg-white p-5">
-        <h2 className="mb-2 text-lg font-semibold text-slate-800">Summary</h2>
-        <p className="text-sm text-slate-600">
-          {answeredCount} of {catalogue.fields.length} fields answered.
+      <div className="rounded-3xl border border-black/5 bg-white/80 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_12px_32px_-12px_rgba(0,0,0,0.12)] backdrop-blur-xl">
+        <h2 className="text-[15px] font-semibold tracking-tight text-slate-900">Summary</h2>
+        <p className="mt-1 text-[13px] text-slate-500">
+          {answeredCount} of {relevant.length} relevant fields answered.
         </p>
         {graded.length > 0 ? (
-          <p className="mt-1 text-sm font-medium text-slate-700">
-            Score: {correct} / {graded.length} graded fields correct
-          </p>
+          <div className="mt-4 flex items-center gap-4">
+            <div className="relative flex h-16 w-16 items-center justify-center">
+              <svg className="h-16 w-16 -rotate-90" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="16" fill="none" stroke="#e2e8f0" strokeWidth="3" />
+                <circle
+                  cx="18" cy="18" r="16" fill="none"
+                  stroke={score >= 80 ? '#34c759' : score >= 50 ? '#ff9f0a' : '#ff3b30'}
+                  strokeWidth="3" strokeLinecap="round"
+                  strokeDasharray={`${(score / 100) * 100.5} 100.5`}
+                />
+              </svg>
+              <span className="absolute text-sm font-semibold text-slate-800">{score}%</span>
+            </div>
+            <p className="text-[13px] font-medium text-slate-700">
+              {correct} / {graded.length} graded fields correct
+            </p>
+          </div>
         ) : (
-          <p className="mt-1 text-sm italic text-slate-400">
+          <p className="mt-2 text-[13px] italic text-slate-400">
             No model answers set — set them in Config to enable grading.
           </p>
         )}
       </div>
 
       {graded.length > 0 && (
-        <div className="rounded-lg border border-slate-200 bg-white p-5">
-          <h2 className="mb-4 text-lg font-semibold text-slate-800">Graded fields</h2>
-          <div className="space-y-3">
+        <div className="rounded-3xl border border-black/5 bg-white/80 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_12px_32px_-12px_rgba(0,0,0,0.12)] backdrop-blur-xl">
+          <h2 className="mb-4 text-[15px] font-semibold tracking-tight text-slate-900">Graded fields</h2>
+          <div className="space-y-2.5">
             {graded.map((field) => {
               const ok = isCorrect(field, answers[field.code]);
               return (
                 <div
                   key={field.code}
-                  className={`rounded-md border p-3 ${ok ? 'border-green-200 bg-green-50' : 'border-red-200 bg-red-50'}`}
+                  className={`rounded-2xl border p-4 ${ok ? 'border-green-100 bg-green-50/70' : 'border-red-100 bg-red-50/70'}`}
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <span className="text-sm font-medium text-slate-800">
-                      <span className="mr-2 font-mono text-xs text-slate-500">{field.code}</span>
+                    <span className="text-[13px] font-medium text-slate-800">
+                      <span className="mr-2 font-mono text-[11px] text-slate-400">{field.code}</span>
                       {field.label}
                     </span>
-                    <span className={`text-sm font-semibold ${ok ? 'text-green-700' : 'text-red-700'}`}>
+                    <span className={`shrink-0 text-[13px] font-semibold ${ok ? 'text-green-600' : 'text-red-500'}`}>
                       {ok ? '✓ correct' : '✗ incorrect'}
                     </span>
                   </div>
-                  <p className="mt-1 text-sm text-slate-600">
-                    Your answer: <strong>{displayValue(answers[field.code])}</strong>
+                  <p className="mt-1 text-[13px] text-slate-600">
+                    Your answer: <strong className="font-semibold">{displayValue(answers[field.code])}</strong>
                   </p>
                   {!ok && (
-                    <p className="text-sm text-slate-600">
-                      Expected: <strong>{field.modelAnswer}</strong>
+                    <p className="text-[13px] text-slate-600">
+                      Expected: <strong className="font-semibold">{field.modelAnswer}</strong>
                     </p>
                   )}
                   {field.guidance && (
-                    <p className="mt-1 text-xs italic text-slate-500">{field.guidance}</p>
+                    <p className="mt-1.5 text-[12px] italic text-slate-400">{field.guidance}</p>
                   )}
                 </div>
               );

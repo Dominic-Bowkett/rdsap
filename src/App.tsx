@@ -37,47 +37,49 @@ export default function App() {
     }
   };
 
+  const toolbarBtn =
+    'rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 font-medium text-slate-600 shadow-sm backdrop-blur transition hover:bg-white hover:text-slate-900';
+
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900">
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto max-w-5xl px-4 py-4">
-          <h1 className="text-xl font-bold">RdSAP EPC Assessor Training</h1>
-          <p className="text-sm text-slate-500">
-            Practise recording every field an assessor collects for an EPC. Based on RdSAP10
-            (Feb 2024) Table 31. Data stays in your browser.
-          </p>
-          <nav className="mt-3 flex flex-wrap gap-2">
-            {MODES.map((m) => (
-              <button
-                key={m.id}
-                onClick={() => setMode(m.id)}
-                className={`rounded-md px-3 py-1.5 text-sm font-medium ${
-                  mode === m.id
-                    ? 'bg-sky-600 text-white'
-                    : 'border border-slate-300 text-slate-600 hover:bg-slate-100'
-                }`}
-              >
-                {m.label}
-              </button>
-            ))}
-          </nav>
+    <div className="min-h-screen text-slate-900">
+      <header className="sticky top-0 z-30 border-b border-black/5 bg-white/70 backdrop-blur-xl">
+        <div className="mx-auto max-w-5xl px-5 py-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h1 className="text-[19px] font-semibold tracking-tight text-slate-900">
+                RdSAP EPC Assessor Training
+              </h1>
+              <p className="mt-0.5 text-[12px] text-slate-400">
+                Practise recording every field for an EPC · RdSAP10 (Feb 2024) Table 31 · data stays in your browser
+              </p>
+            </div>
+            <nav className="inline-flex shrink-0 rounded-full bg-slate-100/80 p-1 backdrop-blur">
+              {MODES.map((m) => (
+                <button
+                  key={m.id}
+                  onClick={() => setMode(m.id)}
+                  className={`rounded-full px-4 py-1.5 text-[13px] font-medium transition ${
+                    mode === m.id
+                      ? 'bg-white text-slate-900 shadow-sm'
+                      : 'text-slate-500 hover:text-slate-800'
+                  }`}
+                >
+                  {m.label}
+                </button>
+              ))}
+            </nav>
+          </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-5xl px-4 py-6">
-        <div className="mb-5 flex flex-wrap items-center gap-2 text-sm">
+      <main className="mx-auto max-w-5xl px-5 py-7">
+        <div className="mb-6 flex flex-wrap items-center gap-2 text-[13px]">
           {mode === 'config' && (
             <>
-              <button
-                onClick={() => downloadJson('rdsap-catalogue.json', catalogue)}
-                className="rounded-md border border-slate-300 px-3 py-1 hover:bg-slate-100"
-              >
+              <button onClick={() => downloadJson('rdsap-catalogue.json', catalogue)} className={toolbarBtn}>
                 Export catalogue
               </button>
-              <button
-                onClick={() => catalogueFileRef.current?.click()}
-                className="rounded-md border border-slate-300 px-3 py-1 hover:bg-slate-100"
-              >
+              <button onClick={() => catalogueFileRef.current?.click()} className={toolbarBtn}>
                 Import catalogue
               </button>
               <input
@@ -91,23 +93,17 @@ export default function App() {
           )}
           {mode !== 'config' && (
             <>
-              <button
-                onClick={() => downloadJson('rdsap-attempt.json', answers)}
-                className="rounded-md border border-slate-300 px-3 py-1 hover:bg-slate-100"
-              >
+              <button onClick={() => downloadJson('rdsap-attempt.json', answers)} className={toolbarBtn}>
                 Export answers
               </button>
-              <button
-                onClick={() => answersFileRef.current?.click()}
-                className="rounded-md border border-slate-300 px-3 py-1 hover:bg-slate-100"
-              >
+              <button onClick={() => answersFileRef.current?.click()} className={toolbarBtn}>
                 Import answers
               </button>
               <button
                 onClick={() => {
                   if (confirm('Clear all answers?')) clearAnswers();
                 }}
-                className="rounded-md border border-slate-300 px-3 py-1 hover:bg-slate-100"
+                className={toolbarBtn}
               >
                 Clear answers
               </button>

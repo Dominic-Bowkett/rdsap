@@ -1,5 +1,18 @@
 export type FieldType = 'enum' | 'multienum' | 'number' | 'boolean' | 'text';
 
+/**
+ * A single visibility rule. A field is shown only when ALL of its conditions
+ * pass (logical AND). Each condition references another field by `code`.
+ */
+export interface FieldCondition {
+  /** Code of the controlling field. */
+  field: string;
+  /** Pass when the controlling answer is one of these values (enum/text/number). */
+  in?: string[];
+  /** Pass when the controlling boolean equals this. */
+  is?: boolean;
+}
+
 export interface FieldDef {
   /** RdSAP Table 31 code, e.g. "4-2". */
   code: string;
@@ -18,6 +31,8 @@ export interface FieldDef {
   modelAnswer?: string;
   /** True for items recorded per building part / per wall / per window etc. */
   repeatable?: boolean;
+  /** Show this field only when all of these conditions on other answers pass. */
+  visibleWhen?: FieldCondition[];
 }
 
 /** A trainee's answer to one field. For repeatable fields, value is an array. */
