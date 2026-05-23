@@ -10,7 +10,7 @@ interface Props {
 const FIELD_TYPES: FieldType[] = ['enum', 'multienum', 'number', 'boolean', 'text'];
 
 const inputClass =
-  'w-full rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-[13px] text-slate-800 shadow-sm transition focus:border-[#0071e3] focus:outline-none focus:ring-2 focus:ring-[#0071e3]/30';
+  'w-full rounded-lg border-2 border-neutral-300 bg-white px-3 py-1.5 text-[13px] font-medium text-neutral-900 transition focus:border-neutral-900 focus:outline-none focus:ring-2 focus:ring-yellow-400';
 
 export function ConfigEditor({ catalogue, setCatalogue, resetToSpec }: Props) {
   const [filter, setFilter] = useState('');
@@ -59,22 +59,22 @@ export function ConfigEditor({ catalogue, setCatalogue, resetToSpec }: Props) {
         />
         <button
           onClick={addField}
-          className="rounded-full bg-[#0071e3] px-4 py-1.5 text-[13px] font-medium text-white shadow-sm transition hover:bg-[#0077ed]"
+          className="rounded-lg border-2 border-neutral-900 bg-yellow-400 px-4 py-1.5 text-[13px] font-bold text-black shadow-sm transition hover:bg-yellow-300"
         >
           + Add field
         </button>
         <button
           onClick={resetToSpec}
-          className="rounded-full border border-slate-200 bg-white px-4 py-1.5 text-[13px] font-medium text-slate-600 shadow-sm transition hover:bg-slate-50"
+          className="rounded-lg border-2 border-neutral-900 bg-white px-4 py-1.5 text-[13px] font-semibold text-neutral-800 shadow-sm transition hover:bg-neutral-100"
         >
           Reset to RdSAP spec
         </button>
-        <span className="text-[13px] text-slate-400">{filtered.length} fields</span>
+        <span className="text-[13px] font-medium text-neutral-500">{filtered.length} fields</span>
       </div>
 
       <div className="space-y-3">
         {filtered.map((field) => (
-          <div key={field.code} className="rounded-2xl border border-black/5 bg-white/80 p-5 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(0,0,0,0.1)] backdrop-blur-xl">
+          <div key={field.code} className="rounded-xl border-2 border-neutral-900 bg-white p-5 shadow-sm">
             <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
               <label className="text-xs font-medium text-slate-500">
                 Code

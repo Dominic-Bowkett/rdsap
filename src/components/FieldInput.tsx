@@ -7,7 +7,7 @@ interface Props {
 }
 
 const inputClass =
-  'w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-[13px] text-slate-800 shadow-sm transition focus:border-[#0071e3] focus:outline-none focus:ring-2 focus:ring-[#0071e3]/30';
+  'w-full rounded-lg border-2 border-neutral-300 bg-white px-3.5 py-2 text-[13px] font-medium text-neutral-900 transition focus:border-neutral-900 focus:outline-none focus:ring-2 focus:ring-yellow-400';
 
 export function FieldInput({ field, value, onChange }: Props) {
   switch (field.type) {

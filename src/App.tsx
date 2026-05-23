@@ -38,30 +38,31 @@ export default function App() {
   };
 
   const toolbarBtn =
-    'rounded-full border border-slate-200 bg-white/80 px-4 py-1.5 font-medium text-slate-600 shadow-sm backdrop-blur transition hover:bg-white hover:text-slate-900';
+    'rounded-lg border border-neutral-300 bg-white px-4 py-1.5 font-semibold text-neutral-700 shadow-sm transition hover:border-neutral-900 hover:text-neutral-900';
 
   return (
-    <div className="min-h-screen text-slate-900">
-      <header className="sticky top-0 z-30 border-b border-black/5 bg-white/70 backdrop-blur-xl">
+    <div className="min-h-screen text-neutral-900">
+      <header className="sticky top-0 z-30 border-b-4 border-yellow-400 bg-neutral-950">
         <div className="mx-auto max-w-5xl px-5 py-3">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h1 className="text-[19px] font-semibold tracking-tight text-slate-900">
+              <h1 className="flex items-center gap-2 text-[19px] font-bold tracking-tight text-white">
+                <span className="inline-block h-4 w-4 rounded-sm bg-yellow-400" />
                 RdSAP EPC Assessor Training
               </h1>
-              <p className="mt-0.5 text-[12px] text-slate-400">
+              <p className="mt-0.5 text-[12px] text-neutral-400">
                 Practise recording every field for an EPC · RdSAP10 (Feb 2024) Table 31 · data stays in your browser
               </p>
             </div>
-            <nav className="inline-flex shrink-0 rounded-full bg-slate-100/80 p-1 backdrop-blur">
+            <nav className="inline-flex shrink-0 rounded-lg bg-white/10 p-1">
               {MODES.map((m) => (
                 <button
                   key={m.id}
                   onClick={() => setMode(m.id)}
-                  className={`rounded-full px-4 py-1.5 text-[13px] font-medium transition ${
+                  className={`rounded-md px-4 py-1.5 text-[13px] font-semibold transition ${
                     mode === m.id
-                      ? 'bg-white text-slate-900 shadow-sm'
-                      : 'text-slate-500 hover:text-slate-800'
+                      ? 'bg-yellow-400 text-black shadow-sm'
+                      : 'text-neutral-300 hover:text-white'
                   }`}
                 >
                   {m.label}

@@ -32,39 +32,39 @@ export function ReviewPanel({ catalogue, answers }: Props) {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-3xl border border-black/5 bg-white/80 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_12px_32px_-12px_rgba(0,0,0,0.12)] backdrop-blur-xl">
-        <h2 className="text-[15px] font-semibold tracking-tight text-slate-900">Summary</h2>
-        <p className="mt-1 text-[13px] text-slate-500">
+      <div className="rounded-xl border-2 border-neutral-900 bg-white p-6 shadow-[4px_4px_0_0_rgba(250,204,21,1)]">
+        <h2 className="text-[15px] font-bold tracking-tight text-neutral-900">Summary</h2>
+        <p className="mt-1 text-[13px] font-medium text-neutral-500">
           {answeredCount} of {relevant.length} relevant fields answered.
         </p>
         {graded.length > 0 ? (
           <div className="mt-4 flex items-center gap-4">
             <div className="relative flex h-16 w-16 items-center justify-center">
               <svg className="h-16 w-16 -rotate-90" viewBox="0 0 36 36">
-                <circle cx="18" cy="18" r="16" fill="none" stroke="#e2e8f0" strokeWidth="3" />
+                <circle cx="18" cy="18" r="16" fill="none" stroke="#e5e5e5" strokeWidth="4" />
                 <circle
                   cx="18" cy="18" r="16" fill="none"
-                  stroke={score >= 80 ? '#34c759' : score >= 50 ? '#ff9f0a' : '#ff3b30'}
-                  strokeWidth="3" strokeLinecap="round"
+                  stroke={score >= 80 ? '#16a34a' : score >= 50 ? '#facc15' : '#ef4444'}
+                  strokeWidth="4" strokeLinecap="round"
                   strokeDasharray={`${(score / 100) * 100.5} 100.5`}
                 />
               </svg>
-              <span className="absolute text-sm font-semibold text-slate-800">{score}%</span>
+              <span className="absolute text-sm font-bold text-neutral-900">{score}%</span>
             </div>
-            <p className="text-[13px] font-medium text-slate-700">
+            <p className="text-[13px] font-semibold text-neutral-700">
               {correct} / {graded.length} graded fields correct
             </p>
           </div>
         ) : (
-          <p className="mt-2 text-[13px] italic text-slate-400">
+          <p className="mt-2 text-[13px] italic text-neutral-400">
             No model answers set — set them in Config to enable grading.
           </p>
         )}
       </div>
 
       {graded.length > 0 && (
-        <div className="rounded-3xl border border-black/5 bg-white/80 p-6 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_12px_32px_-12px_rgba(0,0,0,0.12)] backdrop-blur-xl">
-          <h2 className="mb-4 text-[15px] font-semibold tracking-tight text-slate-900">Graded fields</h2>
+        <div className="rounded-xl border-2 border-neutral-900 bg-white p-6 shadow-[4px_4px_0_0_rgba(250,204,21,1)]">
+          <h2 className="mb-4 text-[15px] font-bold tracking-tight text-neutral-900">Graded fields</h2>
           <div className="space-y-2.5">
             {graded.map((field) => {
               const ok = isCorrect(field, answers[field.code]);

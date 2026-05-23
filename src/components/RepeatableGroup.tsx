@@ -35,7 +35,7 @@ export function RepeatableGroup({ field, value, onChange }: Props) {
           <button
             type="button"
             onClick={() => remove(i)}
-            className="rounded-full p-1.5 text-slate-400 transition hover:bg-red-50 hover:text-red-500"
+            className="rounded-full p-1.5 text-neutral-400 transition hover:bg-red-50 hover:text-red-500"
             aria-label="Remove instance"
           >
             <svg className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -47,7 +47,7 @@ export function RepeatableGroup({ field, value, onChange }: Props) {
       <button
         type="button"
         onClick={add}
-        className="inline-flex items-center gap-1 rounded-full bg-[#0071e3]/10 px-3.5 py-1.5 text-[13px] font-medium text-[#0071e3] transition hover:bg-[#0071e3]/15"
+        className="inline-flex items-center gap-1 rounded-lg border-2 border-neutral-900 bg-yellow-400 px-3.5 py-1.5 text-[13px] font-bold text-black transition hover:bg-yellow-300"
       >
         + Add instance
       </button>

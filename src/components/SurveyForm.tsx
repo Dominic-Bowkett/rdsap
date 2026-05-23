@@ -35,16 +35,16 @@ export function SurveyForm({ catalogue, answers, setAnswer }: Props) {
 
   return (
     <div className="space-y-6">
-      <div className="sticky top-[73px] z-10 -mx-1 rounded-2xl border border-black/5 bg-white/70 px-5 py-3 shadow-sm backdrop-blur-xl">
+      <div className="sticky top-[73px] z-10 -mx-1 rounded-xl border-2 border-neutral-900 bg-white px-5 py-3 shadow-sm">
         <div className="flex items-center justify-between text-sm">
-          <span className="font-medium text-slate-700">Progress</span>
-          <span className="tabular-nums text-slate-500">
+          <span className="font-bold text-neutral-900">Progress</span>
+          <span className="tabular-nums font-semibold text-neutral-600">
             {answered} / {visible.length} relevant fields
           </span>
         </div>
-        <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-slate-200/70">
+        <div className="mt-2 h-2 w-full overflow-hidden rounded-full bg-neutral-200">
           <div
-            className="h-full rounded-full bg-[#0071e3] transition-all duration-500 ease-out"
+            className="h-full rounded-full bg-yellow-400 transition-all duration-500 ease-out"
             style={{ width: `${pct}%` }}
           />
         </div>
@@ -53,25 +53,25 @@ export function SurveyForm({ catalogue, answers, setAnswer }: Props) {
       {sections.map(([section, fields]) => (
         <section
           key={section}
-          className="overflow-hidden rounded-3xl border border-black/5 bg-white/80 shadow-[0_1px_2px_rgba(0,0,0,0.04),0_12px_32px_-12px_rgba(0,0,0,0.12)] backdrop-blur-xl"
+          className="overflow-hidden rounded-xl border-2 border-neutral-900 bg-white shadow-[4px_4px_0_0_rgba(250,204,21,1)]"
         >
-          <h2 className="border-b border-slate-100 px-6 py-4 text-[15px] font-semibold tracking-tight text-slate-900">
+          <h2 className="border-b-4 border-yellow-400 bg-neutral-950 px-6 py-3 text-[15px] font-bold tracking-tight text-white">
             {section}
           </h2>
-          <div className="divide-y divide-slate-100">
+          <div className="divide-y divide-neutral-200">
             {fields.map((field) => (
               <div
                 key={field.code}
                 className="grid grid-cols-1 gap-2 px-6 py-4 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-center md:gap-6"
               >
-                <label className="flex items-start text-[13px] font-medium text-slate-700">
-                  <span className="mr-2 mt-0.5 rounded-md bg-slate-100 px-1.5 py-0.5 font-mono text-[11px] text-slate-400">
+                <label className="flex items-start text-[13px] font-semibold text-neutral-800">
+                  <span className="mr-2 mt-0.5 rounded-md bg-yellow-400 px-1.5 py-0.5 font-mono text-[11px] font-bold text-black">
                     {field.code}
                   </span>
                   <span>
                     {field.label}
                     {field.repeatable && (
-                      <span className="ml-1 text-[11px] font-normal text-slate-400">(per instance)</span>
+                      <span className="ml-1 text-[11px] font-normal text-neutral-400">(per instance)</span>
                     )}
                     {field.guidance && <Guidance text={field.guidance} />}
                   </span>
